@@ -1,5 +1,5 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
 import { navigationRef } from './RootNavigation';
 import { LINKING_OPTIONS } from './_config/routes/linking-options';
 import { RootStackNavigator } from './routes/root-stack-navigator/root-stack-navigator';

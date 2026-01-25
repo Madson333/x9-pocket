@@ -6,7 +6,7 @@ export const Routes = {
   menu: 'Menu',
   placeProfile: 'PlaceProfile',
   productsList: 'ProductsList',
-  capture: 'Capture',
+  capture: 'Capture'
 } as const;
 
-export type RouteKey = typeof Routes[keyof typeof Routes];
+export type RouteKey = (typeof Routes)[keyof typeof Routes];

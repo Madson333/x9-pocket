@@ -1,11 +1,10 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Routes } from '@/routes/constants';
-import FeedScreen from '@/src/screens/FeedScreen';
-import SearchScreen from '@/src/screens/SearchScreen';
-import { OrdersStackNavigator } from '@/src/routes/orders-stack';
-import MenuScreen from '@/src/screens/MenuScreen';
 import type { TabParamList } from '@/routes/types';
+import { OrdersStackNavigator } from '@/src/routes/orders-stack';
+import FeedScreen from '@/src/screens/FeedScreen';
+import MenuScreen from '@/src/screens/MenuScreen';
+import SearchScreen from '@/src/screens/SearchScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
 
 export const Tab = createBottomTabNavigator<TabParamList>();
 
