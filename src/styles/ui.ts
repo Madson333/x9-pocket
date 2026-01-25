@@ -1,11 +1,11 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
 export const feedStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F0F2F5' // Cinza "escritório de contabilidade"
+    backgroundColor: '#F0F2F5'
   },
   header: {
     paddingTop: 50,
@@ -17,11 +17,12 @@ export const feedStyles = StyleSheet.create({
     elevation: 10
   },
   headerTitle: {
+    alignItems: 'center',
+    justifyContent: 'center',
     fontSize: 24,
     fontFamily: 'Montserrat_700Bold',
     color: '#E63946',
-    textTransform: 'uppercase',
-    letterSpacing: 2
+    textTransform: 'uppercase'
   },
   card: {
     backgroundColor: '#FFFFFF',
@@ -55,7 +56,6 @@ export const feedStyles = StyleSheet.create({
     fontStyle: 'italic',
     marginBottom: 10
   },
-  // image wrapper and placeholder
   cardImageWrapper: {
     position: 'relative'
   },
@@ -104,6 +104,14 @@ export const feedStyles = StyleSheet.create({
   }
 });
 
+const COLORS = {
+  danger: '#E63946',
+  dark: '#1D3557',
+  light: '#F1FAEE',
+  glass: 'rgba(29, 53, 87, 0.8)',
+  success: '#2A9D8F'
+};
+
 export const cameraStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -111,32 +119,35 @@ export const cameraStyles = StyleSheet.create({
   },
   camera: {
     flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
+    width: '100%',
+    justifyContent: 'space-between'
   },
   topControls: {
-    position: 'absolute',
-    top: 50,
-    left: 20,
+    paddingTop: Platform.OS === 'ios' ? 60 : 40,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     zIndex: 10
   },
   closeButton: {
-    padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    borderRadius: 20
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   closeText: {
-    color: '#FFF',
-    fontSize: 16,
+    color: COLORS.light,
+    fontSize: 20,
     fontWeight: 'bold'
   },
   controlsContainer: {
-    width: width,
     height: 150,
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(0,0,0,0.9)',
     flexDirection: 'row',
-    justifyContent: 'space-around',
     alignItems: 'center',
+    justifyContent: 'center',
     paddingBottom: 20
   },
   captureBtnOuter: {
@@ -144,60 +155,74 @@ export const cameraStyles = StyleSheet.create({
     height: 80,
     borderRadius: 40,
     borderWidth: 4,
-    borderColor: '#FFF',
+    borderColor: COLORS.light,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'transparent'
   },
   captureBtnInner: {
-    width: 65,
-    height: 65,
-    borderRadius: 32.5,
-    backgroundColor: '#E63946'
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: COLORS.danger,
+    shadowColor: COLORS.danger,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    elevation: 5
   },
   inputOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.85)',
+    backgroundColor: 'rgba(15, 23, 42, 0.95)',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20
+    padding: 20,
+    zIndex: 20
   },
   previewImage: {
-    width: width * 0.8,
-    height: width * 0.8,
-    borderRadius: 10,
-    marginBottom: 20,
+    width: width * 0.9,
+    height: width * 0.9,
+    borderRadius: 16,
     borderWidth: 2,
-    borderColor: '#FFF'
+    borderColor: COLORS.light,
+    marginBottom: 20,
+    transform: [{ rotate: '-1deg' }]
   },
   textInput: {
     width: '100%',
-    backgroundColor: '#FFF',
-    borderRadius: 8,
-    padding: 15,
+    backgroundColor: COLORS.light,
+    borderRadius: 12,
+    padding: 16,
     fontSize: 16,
-    marginBottom: 20,
-    elevation: 5
+    color: COLORS.dark,
+    marginBottom: 16,
+    elevation: 2
   },
   sendButton: {
     width: '100%',
-    backgroundColor: '#28A745',
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center'
+    backgroundColor: COLORS.danger,
+    paddingVertical: 18,
+    borderRadius: 12,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5
   },
   sendButtonText: {
-    color: '#FFF',
+    color: COLORS.light,
     fontSize: 18,
     fontWeight: '900',
+    letterSpacing: 1.5,
     textTransform: 'uppercase'
   },
-  // camera specific additions
-  preview: {
-    flex: 1,
-    width: '100%',
-    backgroundColor: '#111'
+  retryButton: {
+    marginTop: 20,
+    padding: 10
   },
-  sideSpacer: {
-    width: 80
+  retryText: {
+    color: '#AAA',
+    textDecorationLine: 'underline'
   }
 });
