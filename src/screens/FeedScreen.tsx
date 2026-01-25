@@ -1,7 +1,7 @@
 import type { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-
+import { Routes } from '../routes/constants';
 
 type FeedNavigationProp = StackNavigationProp<any>;
 
@@ -15,7 +15,7 @@ const FeedScreen: React.FC<Props> = ({ navigation }) => {
       <Text style={styles.title}>Feed da Vergonha</Text>
       <Button
         title="Nova Denúncia"
-        onPress={() => navigation.navigate('Capturar Crime')}
+        onPress={() => navigation.navigate(Routes.CapturarCrime)}
       />
     </View>
   );
