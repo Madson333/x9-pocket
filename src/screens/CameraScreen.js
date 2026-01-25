@@ -1,5 +1,4 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default function CameraScreen({ navigation }) {
   return (
@@ -11,6 +10,11 @@ export default function CameraScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 16 },
-  title: { fontSize: 20, marginBottom: 12 },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16
+  },
+  title: { fontSize: 20, marginBottom: 12 }
 });
