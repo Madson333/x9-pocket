@@ -1,7 +1,6 @@
 import type { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { Routes } from '../routes/constants';
 
 type CameraNavigationProp = StackNavigationProp<any>;
 
