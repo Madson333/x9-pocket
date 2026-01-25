@@ -18,7 +18,7 @@ export const feedStyles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 24,
-    fontWeight: '900',
+    fontFamily: 'Montserrat_700Bold',
     color: '#E63946',
     textTransform: 'uppercase',
     letterSpacing: 2
