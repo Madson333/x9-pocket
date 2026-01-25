@@ -7,17 +7,12 @@ import { Routes } from './src/routes/constants';
 import CameraScreen from './src/screens/CameraScreen';
 import FeedScreen from './src/screens/FeedScreen';
 
-const Stack = createStackNavigator();
+import TabNavigator from './src/routes/tab-navigator';
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{ headerStyle: { backgroundColor: '#FF0000' } }}
-      >
-        <Stack.Screen name={Routes.MuralDaVergonha} component={FeedScreen} />
-        <Stack.Screen name={Routes.CapturarCrime} component={CameraScreen} />
-      </Stack.Navigator>
+      <TabNavigator />
     </NavigationContainer>
   );
 }
