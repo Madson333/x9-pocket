@@ -185,8 +185,7 @@ export const cameraStyles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 2,
     borderColor: COLORS.light,
-    marginBottom: 20,
-    transform: [{ rotate: '-1deg' }]
+    marginBottom: 20
   },
   textInput: {
     width: '100%',
