@@ -1,47 +1,75 @@
-import type { StackNavigationProp } from '@react-navigation/stack';
-import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { useBadge } from '../state/BadgeContext';
+import React from 'react';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { DENUNCIAS } from '../data/denuncias';
 import { Routes } from '../routes/constants';
-
-type FeedNavigationProp = StackNavigationProp<any>;
+import { useBadge } from '../state/BadgeContext';
+import { feedStyles } from '../styles/ui';
 
 type Props = {
-  navigation: FeedNavigationProp;
+  navigation: any;
 };
 
-const FeedScreen: React.FC<Props> = ({ navigation }) => {
+function FeedScreen({ navigation }: Props) {
   const { increment, reset } = useBadge();
 
   useFocusEffect(
     React.useCallback(() => {
-      // clear badge when entering the feed
       reset();
     }, [reset])
   );
 
+  const handleNavigateDetails = React.useCallback(
+    (item: any) => {
+      navigation.navigate(Routes.DenunciaDetails, { item });
+    },
+    [navigation]
+  );
+
+  const handleNavigateCamera = React.useCallback(() => {
+    navigation.navigate(Routes.CapturarCrime);
+  }, [navigation]);
+
+  const renderItem = React.useCallback(
+    ({ item }: any) => (
+      <TouchableOpacity
+        style={feedStyles.card}
+        onPress={() => handleNavigateDetails(item)}
+      >
+        <View style={feedStyles.cardImageWrapper}>
+          <Image source={{ uri: item.img }} style={feedStyles.image} />
+          <View style={feedStyles.timestamp}>
+            <Text style={feedStyles.timestampText}>{item.timestamp ?? ''}</Text>
+          </View>
+        </View>
+        <View style={feedStyles.cardContent}>
+          <Text style={feedStyles.crimeTitle}>{item.crime}</Text>
+          <Text style={feedStyles.locationText}>Local: {item.local}</Text>
+        </View>
+      </TouchableOpacity>
+    ),
+    [handleNavigateDetails]
+  );
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Feed da Vergonha</Text>
-      <Button
-        title="Nova Denúncia"
-        onPress={() => navigation.navigate(Routes.CapturarCrime)}
+    <View style={feedStyles.container}>
+      <View style={feedStyles.header}>
+        <Text style={feedStyles.headerTitle}>Mural da Vergonha</Text>
+      </View>
+
+      <View style={feedStyles.spacerTop} />
+
+      <FlatList
+        data={DENUNCIAS}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        contentContainerStyle={{ paddingBottom: 140 }}
       />
-      <View style={{ height: 12 }} />
-      <Button title="Simular Notificação" onPress={() => increment()} />
+
+      <TouchableOpacity style={feedStyles.fab} onPress={handleNavigateCamera}>
+        <Text style={feedStyles.fabText}>+</Text>
+      </TouchableOpacity>
     </View>
   );
-};
-
+}
 export default FeedScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16
-  },
-  title: { fontSize: 20, marginBottom: 12 }
-});
