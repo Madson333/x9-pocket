@@ -1,9 +1,12 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
 import type { StackNavigationProp } from '@react-navigation/stack';
+import React from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import type { RootStackParamList } from '../../App';
 
-type CameraNavigationProp = StackNavigationProp<RootStackParamList, 'Capturar Crime'>;
+type CameraNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Capturar Crime'
+>;
 
 type Props = {
   navigation: CameraNavigationProp;
@@ -21,6 +24,11 @@ const CameraScreen: React.FC<Props> = ({ navigation }) => {
 export default CameraScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 16 },
-  title: { fontSize: 20, marginBottom: 12 },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16
+  },
+  title: { fontSize: 20, marginBottom: 12 }
 });

@@ -6,14 +6,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import FeedScreen from './src/screens/FeedScreen';
 import CameraScreen from './src/screens/CameraScreen';
 
-export type RootStackParamList = {
-  'Mural da Vergonha': undefined;
-  'Capturar Crime': undefined;
-};
+const Stack = createStackNavigator();
 
-const Stack = createStackNavigator<RootStackParamList>();
-
-export default function App(): JSX.Element {
+export default function App(): React.ReactElement {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#FF0000' } }}>
