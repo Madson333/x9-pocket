@@ -1,12 +1,8 @@
 import type { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import type { RootStackParamList } from '../../App';
 
-type CameraNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Capturar Crime'
->;
+type CameraNavigationProp = StackNavigationProp<any>;
 
 type Props = {
   navigation: CameraNavigationProp;

@@ -1,12 +1,9 @@
 import type { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import type { RootStackParamList } from '../../App';
 
-type FeedNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Mural da Vergonha'
->;
+
+type FeedNavigationProp = StackNavigationProp<any>;
 
 type Props = {
   navigation: FeedNavigationProp;
