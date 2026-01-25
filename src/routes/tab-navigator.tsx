@@ -6,6 +6,7 @@ import FeedScreen from '../screens/FeedScreen';
 import { Routes } from './constants';
 import type { TabParamList } from './types';
 import { useBadge } from '../state/BadgeContext';
+import { fonts, colors, fontSizes } from '../styles/tokens';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -15,8 +16,9 @@ export function TabNavigator(): React.ReactElement {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarActiveTintColor: '#FF0000',
+        tabBarActiveTintColor: colors.alert,
         headerShown: false,
+        tabBarLabelStyle: { fontFamily: fonts.body, fontSize: fontSizes.small },
         tabBarIcon: ({ color, size }) => {
           const name = route.name === Routes.MuralDaVergonha ? 'list' : 'camera';
           return <Ionicons name={name as any} size={size} color={color} />;
