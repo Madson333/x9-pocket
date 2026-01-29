@@ -162,8 +162,7 @@ export const cameraStyles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.9)',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 20
+    justifyContent: 'center'
   },
   captureBtnOuter: {
     width: 80,
@@ -173,7 +172,8 @@ export const cameraStyles = StyleSheet.create({
     borderColor: COLORS.light,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    marginHorizontal: 40
   },
   captureBtnInner: {
     width: 64,
@@ -238,5 +238,23 @@ export const cameraStyles = StyleSheet.create({
   retryText: {
     color: '#AAA',
     textDecorationLine: 'underline'
+  },
+  sideCameraButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: COLORS.light,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  flashButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: COLORS.light,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent'
   }
 });

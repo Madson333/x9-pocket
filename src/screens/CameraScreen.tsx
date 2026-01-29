@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as Location from 'expo-location';
 import React, { useEffect, useRef, useState } from 'react';
@@ -5,12 +6,16 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View
 } from 'react-native';
 import { addDenuncia } from '../data/denuncias';
+import { colors } from '../styles/tokens';
 import { cameraStyles } from '../styles/ui';
 
 type CameraScreenProps = {
@@ -26,6 +31,16 @@ export default function CameraScreen({ navigation }: CameraScreenProps) {
   const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState('');
+  const [sideCamera, setSideCamera] = useState<'front' | 'back'>('back');
+  const [flashActive, setFlashActive] = useState<'off' | 'on'>('off');
+  const disabledFlash = loading || sideCamera === 'front';
+
+  function handleSideCamera() {
+    setSideCamera(sideCamera === 'back' ? 'front' : 'back');
+  }
+  function handleFlash() {
+    setFlashActive(flashActive === 'off' ? 'on' : 'off');
+  }
 
   useEffect(() => {
     (async () => {
@@ -127,48 +142,56 @@ export default function CameraScreen({ navigation }: CameraScreenProps) {
 
   if (capturedPhoto) {
     return (
-      <View style={cameraStyles.container}>
-        <View style={cameraStyles.inputOverlay}>
-          <Text
-            style={{ color: 'white', marginBottom: 10, fontWeight: 'bold' }}
-          >
-            EVIDÊNCIA Nº {evidenceIdRef.current}
-          </Text>
-          <Image
-            source={{ uri: capturedPhoto }}
-            style={cameraStyles.previewImage}
-          />
-          <TextInput
-            style={cameraStyles.textInput}
-            placeholder="Descreva o delito (ex: Roubou grampeador)"
-            placeholderTextColor="#999"
-            value={note}
-            onChangeText={setNote}
-            autoFocus
-          />
-          <TouchableOpacity
-            style={cameraStyles.sendButton}
-            onPress={sendDenuncia}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="#FFF" />
-            ) : (
-              <Text style={cameraStyles.sendButtonText}>
-                PROTOCOLAR DENÚNCIA
-              </Text>
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={cameraStyles.retryButton}
-            onPress={() => setCapturedPhoto(null)}
-          >
-            <Text style={cameraStyles.retryText}>
-              A foto ficou ruim, tirar outra
+      <KeyboardAvoidingView
+        style={cameraStyles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <ScrollView
+          scrollEnabled={false}
+          contentContainerStyle={{ flexGrow: 1 }}
+        >
+          <View style={cameraStyles.inputOverlay}>
+            <Text
+              style={{ color: 'white', marginBottom: 10, fontWeight: 'bold' }}
+            >
+              EVIDÊNCIA Nº {evidenceIdRef.current}
             </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+            <Image
+              source={{ uri: capturedPhoto }}
+              style={cameraStyles.previewImage}
+            />
+            <TextInput
+              style={cameraStyles.textInput}
+              placeholder="Descreva o delito (ex: Roubou grampeador)"
+              placeholderTextColor="#999"
+              value={note}
+              onChangeText={setNote}
+              autoFocus
+            />
+            <TouchableOpacity
+              style={cameraStyles.sendButton}
+              onPress={sendDenuncia}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color="#FFF" />
+              ) : (
+                <Text style={cameraStyles.sendButtonText}>
+                  PROTOCOLAR DENÚNCIA
+                </Text>
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={cameraStyles.retryButton}
+              onPress={() => setCapturedPhoto(null)}
+            >
+              <Text style={cameraStyles.retryText}>
+                A foto ficou ruim, tirar outra
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 
@@ -182,9 +205,32 @@ export default function CameraScreen({ navigation }: CameraScreenProps) {
           <Text style={cameraStyles.closeText}>✕</Text>
         </TouchableOpacity>
       </View>
-      <CameraView style={cameraStyles.camera} ref={cameraRef} facing="back" />
+      <CameraView
+        style={cameraStyles.camera}
+        ref={cameraRef}
+        facing={sideCamera}
+        flash={flashActive}
+      />
 
       <View style={cameraStyles.controlsContainer}>
+        <TouchableOpacity disabled={disabledFlash} onPress={handleFlash}>
+          <View
+            style={[
+              cameraStyles.flashButton,
+              { opacity: flashActive === 'on' && !disabledFlash ? 1 : 0.3 }
+            ]}
+          >
+            <Ionicons
+              name="flash"
+              size={14}
+              color={colors.white}
+              style={{
+                opacity: flashActive === 'on' && !disabledFlash ? 1 : 0.3
+              }}
+            />
+          </View>
+        </TouchableOpacity>
+
         <TouchableOpacity
           style={cameraStyles.captureBtnOuter}
           onPress={takePicture}
@@ -196,6 +242,9 @@ export default function CameraScreen({ navigation }: CameraScreenProps) {
           ) : (
             <View style={cameraStyles.captureBtnInner} />
           )}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleSideCamera}>
+          <View style={cameraStyles.sideCameraButton} />
         </TouchableOpacity>
       </View>
     </View>
