@@ -19,6 +19,9 @@ type CameraScreenProps = {
 
 export default function CameraScreen({ navigation }: CameraScreenProps) {
   const cameraRef = useRef<CameraView>(null);
+  const evidenceIdRef = useRef<string>(
+    Math.floor(Math.random() * 1000).toString()
+  );
   const [permission, requestPermission] = useCameraPermissions();
   const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -86,6 +89,7 @@ export default function CameraScreen({ navigation }: CameraScreenProps) {
 
       setCapturedPhoto(null);
       setNote('');
+      evidenceIdRef.current = Math.floor(Math.random() * 1000).toString();
       navigation.navigate('Mural da Vergonha', { refresh: true });
     } catch (error: any) {
       console.error('Erro ao enviar denúncia:', error);
@@ -129,7 +133,7 @@ export default function CameraScreen({ navigation }: CameraScreenProps) {
           <Text
             style={{ color: 'white', marginBottom: 10, fontWeight: 'bold' }}
           >
-            EVIDÊNCIA Nº {Math.floor(Math.random() * 1000)}
+            EVIDÊNCIA Nº {evidenceIdRef.current}
           </Text>
           <Image
             source={{ uri: capturedPhoto }}
