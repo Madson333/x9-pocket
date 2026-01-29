@@ -12,10 +12,12 @@ type Props = {
 
 function FeedScreen({ navigation }: Props) {
   const { increment, reset } = useBadge();
+  const [refreshKey, setRefreshKey] = React.useState(0);
 
   useFocusEffect(
     React.useCallback(() => {
       reset();
+      setRefreshKey((prev) => prev + 1);
     }, [reset])
   );
 
@@ -60,6 +62,7 @@ function FeedScreen({ navigation }: Props) {
       <View style={feedStyles.spacerTop} />
 
       <FlatList
+        key={refreshKey}
         data={DENUNCIAS}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
