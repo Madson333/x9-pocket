@@ -7,6 +7,21 @@ export const feedStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F0F2F5'
   },
+  filters: {
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    backgroundColor: '#F0F2F5'
+  },
+  input: {
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    fontSize: 16,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#DDD'
+  },
   header: {
     paddingTop: 50,
     paddingBottom: 20,

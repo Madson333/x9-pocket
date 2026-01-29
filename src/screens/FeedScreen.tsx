@@ -1,7 +1,8 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
-import { DENUNCIAS } from '../data/denuncias';
+import SearchFilter from '../components/SearchFilter';
+import { DENUNCIAS, Denuncia } from '../data/denuncias';
 import { Routes } from '../routes/constants';
 import { useBadge } from '../state/BadgeContext';
 import { feedStyles } from '../styles/ui';
@@ -11,8 +12,14 @@ type Props = {
 };
 
 function FeedScreen({ navigation }: Props) {
-  const { increment, reset } = useBadge();
-  const [refreshKey, setRefreshKey] = React.useState(0);
+  const { reset } = useBadge();
+
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const [filteredDenuncias, setFilteredDenuncias] =
+    React.useState<Denuncia[]>(DENUNCIAS);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -20,6 +27,13 @@ function FeedScreen({ navigation }: Props) {
       setRefreshKey((prev) => prev + 1);
     }, [reset])
   );
+  useEffect(() => {
+    const filtered = DENUNCIAS.filter((denuncia) =>
+      denuncia.crime.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    setFilteredDenuncias(filtered);
+  }, [searchTerm]);
 
   const handleNavigateDetails = React.useCallback(
     (item: any) => {
@@ -59,16 +73,22 @@ function FeedScreen({ navigation }: Props) {
         <Text style={feedStyles.headerTitle}>Mural da Vergonha</Text>
       </View>
 
-      <View style={feedStyles.spacerTop} />
-
+      <View style={feedStyles.filters}>
+        <SearchFilter
+          placeholder="Busque pelo crime..."
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+        />
+      </View>
       <FlatList
         key={refreshKey}
-        data={DENUNCIAS}
+        data={filteredDenuncias}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         contentContainerStyle={{ paddingBottom: 140 }}
       />
 
+      {/* Botão de ação flutuante para adicionar nova denúncia */}
       <TouchableOpacity style={feedStyles.fab} onPress={handleNavigateCamera}>
         <Text style={feedStyles.fabText}>+</Text>
       </TouchableOpacity>

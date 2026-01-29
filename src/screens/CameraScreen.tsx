@@ -44,13 +44,12 @@ export default function CameraScreen({ navigation }: CameraScreenProps) {
     })();
   }, []);
 
-  // 2. Tirar a foto
   const takePicture = async () => {
     if (cameraRef.current) {
       setLoading(true);
       try {
         const data = await cameraRef.current.takePictureAsync({
-          quality: 0.5, // Não precisamos de 4K para ver crime de escritório
+          quality: 0.5,
           base64: false
         });
         setCapturedPhoto(data.uri);

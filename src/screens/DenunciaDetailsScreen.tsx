@@ -1,14 +1,7 @@
-import type { RouteProp } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { feedStyles } from '../styles/ui';
-
-type Props = {
-  route: RouteProp<Record<string, any>, string> & { params: { item: any } };
-  navigation: StackNavigationProp<any>;
-};
 
 export default function DenunciaDetailsScreen({ route, navigation }: any) {
   const { item } = route.params || {};
@@ -22,7 +15,6 @@ export default function DenunciaDetailsScreen({ route, navigation }: any) {
 
   return (
     <View style={feedStyles.container}>
-      {/* Header estilizado */}
       <View style={feedStyles.header}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
