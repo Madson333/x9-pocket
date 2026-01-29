@@ -1,3 +1,7 @@
+import { Image } from 'react-native';
+
+const ladrao = Image.resolveAssetSource(require('../assets/ladrao.jpg')).uri;
+
 export type Denuncia = {
   id: string;
   crime: string;
@@ -13,7 +17,7 @@ export const DENUNCIAS: Denuncia[] = [
     id: '1',
     crime: 'Roubou caneta',
     local: 'Mesa 4',
-    img: 'https://placekitten.com/600/400',
+    img: ladrao,
     timestamp: '08:12',
     latitude: -23.5505,
     longitude: -46.6333
@@ -22,7 +26,7 @@ export const DENUNCIAS: Denuncia[] = [
     id: '2',
     crime: 'Peixe no microondas',
     local: 'Copa',
-    img: 'https://placekitten.com/601/400',
+    img: ladrao,
     timestamp: '09:42',
     latitude: -23.551,
     longitude: -46.634
@@ -31,7 +35,7 @@ export const DENUNCIAS: Denuncia[] = [
     id: '3',
     crime: 'Parou no corredor',
     local: 'Corredor',
-    img: 'https://placekitten.com/602/400',
+    img: ladrao,
     timestamp: '10:15',
     latitude: -23.5495,
     longitude: -46.632
@@ -40,7 +44,7 @@ export const DENUNCIAS: Denuncia[] = [
     id: '4',
     crime: 'Falou alto demais',
     local: 'Sala 2',
-    img: 'https://placekitten.com/603/400',
+    img: ladrao,
     timestamp: '11:01',
     latitude: -23.552,
     longitude: -46.635
@@ -49,7 +53,7 @@ export const DENUNCIAS: Denuncia[] = [
     id: '5',
     crime: 'Deixou prato sujo',
     local: 'Copa',
-    img: 'https://placekitten.com/604/400',
+    img: ladrao,
     timestamp: '12:34',
     latitude: -23.549,
     longitude: -46.631
