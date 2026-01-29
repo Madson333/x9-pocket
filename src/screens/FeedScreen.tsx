@@ -11,6 +11,27 @@ type Props = {
   navigation: any;
 };
 
+function formatTime(timestamp?: string): string {
+  if (!timestamp) return '';
+
+  if (/^\d{2}:\d{2}$/.test(timestamp)) {
+    return timestamp;
+  }
+
+  try {
+    const date = new Date(timestamp);
+    if (!isNaN(date.getTime())) {
+      return date.toLocaleTimeString('pt-BR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      });
+    }
+  } catch (e) {}
+
+  return timestamp;
+}
+
 function FeedScreen({ navigation }: Props) {
   const { reset } = useBadge();
 
@@ -25,7 +46,12 @@ function FeedScreen({ navigation }: Props) {
     React.useCallback(() => {
       reset();
       setRefreshKey((prev) => prev + 1);
-    }, [reset])
+
+      const filtered = DENUNCIAS.filter((denuncia) =>
+        denuncia.crime.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredDenuncias(filtered);
+    }, [reset, searchTerm])
   );
   useEffect(() => {
     const filtered = DENUNCIAS.filter((denuncia) =>
@@ -55,7 +81,9 @@ function FeedScreen({ navigation }: Props) {
         <View style={feedStyles.cardImageWrapper}>
           <Image source={{ uri: item.img }} style={feedStyles.image} />
           <View style={feedStyles.timestamp}>
-            <Text style={feedStyles.timestampText}>{item.timestamp ?? ''}</Text>
+            <Text style={feedStyles.timestampText}>
+              {formatTime(item.timestamp)}
+            </Text>
           </View>
         </View>
         <View style={feedStyles.cardContent}>
@@ -64,7 +92,7 @@ function FeedScreen({ navigation }: Props) {
         </View>
       </TouchableOpacity>
     ),
-    [handleNavigateDetails]
+    [handleNavigateDetails, formatTime]
   );
 
   return (
@@ -88,7 +116,6 @@ function FeedScreen({ navigation }: Props) {
         contentContainerStyle={{ paddingBottom: 140 }}
       />
 
-      {/* Botão de ação flutuante para adicionar nova denúncia */}
       <TouchableOpacity style={feedStyles.fab} onPress={handleNavigateCamera}>
         <Text style={feedStyles.fabText}>+</Text>
       </TouchableOpacity>
